@@ -32,10 +32,8 @@ func modifierKeyCallback(
 
     if flags.contains(.maskAlphaShift) {
         isMouseMode = true
-        toggleMouseVisibility()
     } else {
         isMouseMode = false
-        toggleMouseVisibility()
     }
 
     return Unmanaged.passUnretained(event)
@@ -215,14 +213,6 @@ func simulateRightClickUp() {
     rightMouseUp?.post(tap: .cghidEventTap)
 }
 
-// Toggle mouse visibility
-func toggleMouseVisibility() {
-    if isMouseMode {
-        CGEvent(source: nil)?.post(tap: .cghidEventTap)  // Show mouse
-    } else {
-        CGEvent(source: nil)?.post(tap: .cghidEventTap)  // Hide mouse
-    }
-}
 func scrollMouse(xPixels: Int, yPixels: Int) {
     let scrollEvent = CGEvent(
         scrollWheelEvent2Source: nil,
