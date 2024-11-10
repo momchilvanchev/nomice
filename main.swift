@@ -3,6 +3,7 @@ import Quartz
 
 var isMouseMode: Bool = false
 var moveVector = CGPoint(x: 0, y: 0)
+var scrollDir = CGPoint(x: 0, y: 0)
 var realSpeed: CGFloat = 3  // Default speed
 let directions: [Int: CGPoint] = [
     37: CGPoint(x: -1, y: 0),
@@ -49,12 +50,12 @@ func eventCallback(
             if !specialKeysPressed {
                 // Handle scrolling up (keycode 47: .)
                 if keyCode == 47 {
-                    scrollMouse(xLines: 0, yLines: Int(realSpeed))
+                    scrollDir.y = 1
                 }
 
                 // Handle scrolling down (keycode 43: ,)
                 if keyCode == 43 {
-                    scrollMouse(xLines: 0, yLines: -Int(realSpeed))
+                    scrollDir.y = -1
                 }
 
                 // Adjust desired speed based on keys 0, 1, 2 // A, S, D
@@ -90,7 +91,14 @@ func eventCallback(
             if keyCode == 0 || keyCode == 1 || keyCode == 2 {
                 speedKeys = speedKeys.filter { $0 != keyCode }
             }
+            if keyCode == 47 {
+                scrollDir.y = 0
+            }
 
+            // Handle scrolling down (keycode 43: ,)
+            if keyCode == 43 {
+                scrollDir.y = 0
+            }
             if directions.keys.contains(keyCode) {
                 movementKeys.remove(keyCode)
             }
@@ -147,9 +155,8 @@ func updateMoveVector() {
 
 // Smooth movement function using a timer
 func startMouseMovement() {
-    Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+    Timer.scheduledTimer(withTimeInterval: 0.008, repeats: true) { _ in
         guard isMouseMode else { return }
-
         // Continuously adjust the speed every cycle
         adjustDesiredSpeed()
         updateMoveVector()
@@ -157,6 +164,8 @@ func startMouseMovement() {
         let newPosition = CGPoint(
             x: currentPosition.x + moveVector.x, y: currentPosition.y + moveVector.y)
         CGWarpMouseCursorPosition(newPosition)
+        scrollMouse(
+            xPixels: Int(scrollDir.x * realSpeed * 5), yPixels: Int(scrollDir.y * realSpeed * 5))
     }
 }
 
@@ -209,14 +218,14 @@ func toggleMouseVisibility() {
         CGEvent(source: nil)?.post(tap: .cghidEventTap)  // Hide mouse
     }
 }
-func scrollMouse(xLines: Int, yLines: Int) {
+func scrollMouse(xPixels: Int, yPixels: Int) {
     let scrollEvent = CGEvent(
         scrollWheelEvent2Source: nil,
-        units: .line,
-        wheelCount: 2,
-        wheel1: Int32(yLines),
-        wheel2: Int32(xLines),
-        wheel3: 0
+        units: .pixel,  // Change to .pixel for precise scrolling by pixels
+        wheelCount: 2,  // Two scroll wheels: vertical and horizontal
+        wheel1: Int32(yPixels),  // Vertical scroll in pixels
+        wheel2: Int32(xPixels),  // Horizontal scroll in pixels
+        wheel3: 0  // Optional: use 0 if you don't need a third wheel
     )
     scrollEvent?.setIntegerValueField(.eventSourceUserData, value: 1)
     scrollEvent?.post(tap: .cghidEventTap)
@@ -225,7 +234,7 @@ func scrollMouse(xLines: Int, yLines: Int) {
 // Start the event taps for both key events and modifier key events
 let keyEventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 let modifierEventMask = (1 << CGEventType.flagsChanged.rawValue)
-
+print("No Mouse")
 if let eventTap = CGEvent.tapCreate(
     tap: .cghidEventTap, place: .headInsertEventTap, options: .defaultTap,
     eventsOfInterest: CGEventMask(keyEventMask | modifierEventMask),
