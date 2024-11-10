@@ -2,6 +2,7 @@ import Foundation
 import Quartz
 
 var isMouseMode: Bool = false
+var specialKeysHeldDown: Bool = false  // This will be true when Fn, Control, Option or Command are held down
 var moveVector = CGPoint(x: 0, y: 0)
 var scrollDir = CGPoint(x: 0, y: 0)
 var realSpeed: CGFloat = 3  // Default speed
@@ -17,22 +18,27 @@ var movementKeys: Set<Int> = []
 var leftClickPressed = false
 var rightClickPressed = false
 
-// Event handling for modifier keys (e.g., Caps Lock)
+// Updated modifier key callback to detect special key presses
 func modifierKeyCallback(
     proxy: CGEventTapProxy, type: CGEventType, event: CGEvent, refcon: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
     guard type == .flagsChanged else { return Unmanaged.passUnretained(event) }
 
     let flags = event.flags
+    let specialKeys: CGEventFlags = [.maskControl, .maskCommand, .maskAlternate, .maskSecondaryFn]
+
+    // Check if any special keys are currently held down
+    specialKeysHeldDown = flags.intersection(specialKeys).isEmpty == false
+
     if flags.contains(.maskAlphaShift) {
         isMouseMode = true
         toggleMouseVisibility()
-        return nil
     } else {
         isMouseMode = false
         toggleMouseVisibility()
-        return nil
     }
+
+    return Unmanaged.passUnretained(event)
 }
 
 // Event handling for key press and release
@@ -40,50 +46,49 @@ func eventCallback(
     proxy: CGEventTapProxy, type: CGEventType, event: CGEvent, refcon: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
     let keyCode = Int(event.getIntegerValueField(.keyboardEventKeycode))
-    var specialKeysPressed: Bool = false
-    if keyCode == 63 || keyCode == 59 || keyCode == 58 || keyCode == 55 || keyCode == 61 {  // Fn, Control, Left Option, Command, Right option
-        specialKeysPressed = true
-    }
+    //var specialKeysPressed: Bool = false
+    //if keyCode == 63 || keyCode == 59 || keyCode == 58 || keyCode == 55 || keyCode == 61 {  // Fn, Control, Left Option, Command, Right option
+    //    specialKeysHeldDown = true
+    //}
 
     if type == .keyDown {
-        if isMouseMode {
-            if !specialKeysPressed {
-                // Handle scrolling up (keycode 47: .)
-                if keyCode == 47 {
-                    scrollDir.y = 1
-                }
+        if isMouseMode && !specialKeysHeldDown {
 
-                // Handle scrolling down (keycode 43: ,)
-                if keyCode == 43 {
-                    scrollDir.y = -1
-                }
-
-                // Adjust desired speed based on keys 0, 1, 2 // A, S, D
-                if keyCode == 0 || keyCode == 1 || keyCode == 2 {
-                    if !speedKeys.contains(keyCode) {
-                        speedKeys.append(keyCode)  // Add the key to the array of held speed keys
-                    }
-                }
-
-                // Update movement keys
-                if directions.keys.contains(keyCode) {
-                    movementKeys.insert(keyCode)
-                }
-
-                // Handle left click (keycode 3)
-                if keyCode == 3 && !leftClickPressed {
-                    leftClickPressed = true
-                    simulateLeftClickDown()
-                }
-
-                // Handle right click (keycode 5)
-                if keyCode == 5 && !rightClickPressed {
-                    rightClickPressed = true
-                    simulateRightClickDown()
-                }
-                // All keys will be prevented if in mouse mode
-                return nil
+            // Handle scrolling up (keycode 47: .)
+            if keyCode == 47 {
+                scrollDir.y = 1
             }
+
+            // Handle scrolling down (keycode 43: ,)
+            if keyCode == 43 {
+                scrollDir.y = -1
+            }
+
+            // Adjust desired speed based on keys 0, 1, 2 // A, S, D
+            if keyCode == 0 || keyCode == 1 || keyCode == 2 {
+                if !speedKeys.contains(keyCode) {
+                    speedKeys.append(keyCode)  // Add the key to the array of held speed keys
+                }
+            }
+
+            // Update movement keys
+            if directions.keys.contains(keyCode) {
+                movementKeys.insert(keyCode)
+            }
+
+            // Handle left click (keycode 3)
+            if keyCode == 3 && !leftClickPressed {
+                leftClickPressed = true
+                simulateLeftClickDown()
+            }
+
+            // Handle right click (keycode 5)
+            if keyCode == 5 && !rightClickPressed {
+                rightClickPressed = true
+                simulateRightClickDown()
+            }
+            // All keys will be prevented if in mouse mode
+            return nil
         }
     } else if type == .keyUp {
         if isMouseMode {
@@ -234,7 +239,7 @@ func scrollMouse(xPixels: Int, yPixels: Int) {
 // Start the event taps for both key events and modifier key events
 let keyEventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 let modifierEventMask = (1 << CGEventType.flagsChanged.rawValue)
-print("No Mouse")
+print("🚫🐁")
 if let eventTap = CGEvent.tapCreate(
     tap: .cghidEventTap, place: .headInsertEventTap, options: .defaultTap,
     eventsOfInterest: CGEventMask(keyEventMask | modifierEventMask),
