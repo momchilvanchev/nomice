@@ -49,12 +49,12 @@ func eventCallback(
             if !specialKeysPressed {
                 // Handle scrolling up (keycode 47: .)
                 if keyCode == 47 {
-                    simulateScrollUp()
+                    scrollMouse(xLines: 0, yLines: Int(realSpeed))
                 }
 
                 // Handle scrolling down (keycode 43: ,)
                 if keyCode == 43 {
-                    simulateScrollDown()
+                    scrollMouse(xLines: 0, yLines: -Int(realSpeed))
                 }
 
                 // Adjust desired speed based on keys 0, 1, 2 // A, S, D
@@ -209,29 +209,17 @@ func toggleMouseVisibility() {
         CGEvent(source: nil)?.post(tap: .cghidEventTap)  // Hide mouse
     }
 }
-
-// Simulate scroll up (mouse wheel up)
-func simulateScrollUp() {
-    let scrollUp = CGEvent(
-        mouseEventSource: nil, mouseType: .scrollWheel, mouseCursorPosition: .zero,
-        mouseButton: .left)
-    scrollUp?.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: 1)  // Scroll up
-    scrollUp?.setIntegerValueField(.scrollWheelEventDeltaAxis2, value: 0)  // Set horizontal scroll to 0
-    scrollUp?.setIntegerValueField(.scrollWheelEventDeltaAxis3, value: 0)  // Set third axis to 0 (if needed)
-    scrollUp?.post(tap: .cghidEventTap)
-    print("Scrolled up")
-}
-
-// Simulate scroll down (mouse wheel down)
-func simulateScrollDown() {
-    let scrollDown = CGEvent(
-        mouseEventSource: nil, mouseType: .scrollWheel, mouseCursorPosition: .zero,
-        mouseButton: .left)
-    scrollDown?.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: -1)  // Scroll down
-    scrollDown?.setIntegerValueField(.scrollWheelEventDeltaAxis2, value: 0)  // Set horizontal scroll to 0
-    scrollDown?.setIntegerValueField(.scrollWheelEventDeltaAxis3, value: 0)  // Set third axis to 0 (if needed)
-    scrollDown?.post(tap: .cghidEventTap)
-    print("Scrolled down")
+func scrollMouse(xLines: Int, yLines: Int) {
+    let scrollEvent = CGEvent(
+        scrollWheelEvent2Source: nil,
+        units: .line,
+        wheelCount: 2,
+        wheel1: Int32(yLines),
+        wheel2: Int32(xLines),
+        wheel3: 0
+    )
+    scrollEvent?.setIntegerValueField(.eventSourceUserData, value: 1)
+    scrollEvent?.post(tap: .cghidEventTap)
 }
 
 // Start the event taps for both key events and modifier key events
