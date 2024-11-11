@@ -25,7 +25,9 @@ func modifierKeyCallback(
     guard type == .flagsChanged else { return Unmanaged.passUnretained(event) }
 
     let flags = event.flags
-    let specialKeys: CGEventFlags = [.maskControl, .maskCommand, .maskAlternate, .maskSecondaryFn]
+    let specialKeys: CGEventFlags = [
+        .maskControl, .maskCommand, .maskAlternate, .maskSecondaryFn, .maskShift,
+    ]
 
     // Check if any special keys are currently held down
     specialKeysHeldDown = flags.intersection(specialKeys).isEmpty == false
@@ -136,7 +138,7 @@ func adjustDesiredSpeed() {
     case 1:
         realSpeed = 5
     case 2:
-        realSpeed = 7
+        realSpeed = 8
     default:
         realSpeed = 3  // Default to 3 if no valid speed key pressed
     }
@@ -174,23 +176,23 @@ NotificationCenter.default.addObserver(
 func startMouseMovement() {
     Timer.scheduledTimer(withTimeInterval: 0.008, repeats: true) { _ in
         guard isMouseMode else { return }
-        
+
         // Continuously adjust the speed every cycle
         adjustDesiredSpeed()
         updateMoveVector()
-        
+
         let currentPosition = getCurrentMousePosition()
-        
+
         // Calculate new position
         var newPosition = CGPoint(
             x: currentPosition.x + moveVector.x,
             y: currentPosition.y + moveVector.y
         )
-        
+
         // Clamp to screen bounds
         newPosition.x = max(screenFrame.minX, min(newPosition.x, screenFrame.maxX - 1))
         newPosition.y = max(screenFrame.minY, min(newPosition.y, screenFrame.maxY - 1))
-        
+
         // Create and post a mouse move event
         if let event = CGEvent(
             mouseEventSource: nil,
@@ -200,7 +202,7 @@ func startMouseMovement() {
         ) {
             event.post(tap: .cghidEventTap)
         }
-        
+
         // Scroll based on calculated direction and speed
         scrollMouse(
             xPixels: Int(scrollDir.x * realSpeed * 5),
@@ -208,7 +210,6 @@ func startMouseMovement() {
         )
     }
 }
-
 
 // Fetch current mouse position
 func getCurrentMousePosition() -> CGPoint {

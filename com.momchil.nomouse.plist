@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- A unique identifier for your agent -->
+    <key>Label</key>
+    <string>com.momchil.nomouse</string>
+
+    <!-- Specify the path to your executable -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/momchilvanchev/Dev/nomouse/nomouse</string> <!-- Full path to executable -->
+    </array>
+
+    <!-- Ensures the program runs at startup -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Keep the program running indefinitely -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Optional: Log output to file for debugging purposes -->
+    <key>StandardOutPath</key>
+    <string>/tmp/nomouse.out</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/nomouse.err</string>
+</dict>
+</plist>
