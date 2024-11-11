@@ -156,21 +156,59 @@ func updateMoveVector() {
     moveVector = newMoveVector
 }
 
-// Smooth movement function using a timer
+var screenFrame = NSScreen.main?.frame ?? .zero  // Use var for dynamic updates
+
+func updateScreenFrame() {
+    screenFrame = NSScreen.main?.frame ?? .zero
+}
+
+// Register for screen change notifications, e.g., in your initialization code
+NotificationCenter.default.addObserver(
+    forName: NSApplication.didChangeScreenParametersNotification,
+    object: nil,
+    queue: .main
+) { _ in
+    updateScreenFrame()
+}
+
 func startMouseMovement() {
     Timer.scheduledTimer(withTimeInterval: 0.008, repeats: true) { _ in
         guard isMouseMode else { return }
+        
         // Continuously adjust the speed every cycle
         adjustDesiredSpeed()
         updateMoveVector()
+        
         let currentPosition = getCurrentMousePosition()
-        let newPosition = CGPoint(
-            x: currentPosition.x + moveVector.x, y: currentPosition.y + moveVector.y)
-        CGWarpMouseCursorPosition(newPosition)
+        
+        // Calculate new position
+        var newPosition = CGPoint(
+            x: currentPosition.x + moveVector.x,
+            y: currentPosition.y + moveVector.y
+        )
+        
+        // Clamp to screen bounds
+        newPosition.x = max(screenFrame.minX, min(newPosition.x, screenFrame.maxX - 1))
+        newPosition.y = max(screenFrame.minY, min(newPosition.y, screenFrame.maxY - 1))
+        
+        // Create and post a mouse move event
+        if let event = CGEvent(
+            mouseEventSource: nil,
+            mouseType: .mouseMoved,
+            mouseCursorPosition: newPosition,
+            mouseButton: .left
+        ) {
+            event.post(tap: .cghidEventTap)
+        }
+        
+        // Scroll based on calculated direction and speed
         scrollMouse(
-            xPixels: Int(scrollDir.x * realSpeed * 5), yPixels: Int(scrollDir.y * realSpeed * 5))
+            xPixels: Int(scrollDir.x * realSpeed * 5),
+            yPixels: Int(scrollDir.y * realSpeed * 5)
+        )
     }
 }
+
 
 // Fetch current mouse position
 func getCurrentMousePosition() -> CGPoint {
