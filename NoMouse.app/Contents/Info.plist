@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+  <dict>
+    <key>CFBundleExecutable</key>
+    <string>NoMouseApp</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.nomouse.nomouse</string>
+    <key>CFBundleName</key>
+    <string>NoMouseApp</string>
+    <key>CFBundleIconFile</key>
+    <key>LSUIElement</key>
+    <true/> <!-- This hides the app from the dock -->
+  </dict>
+</plist>
