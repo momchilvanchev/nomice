@@ -2,6 +2,14 @@ This project delivers a new way of using your computor. A mouse-less way! Once y
 
 NoMouse is for MacOS ONLY! It is made in Swift with MacOS exclusive libraries for low-level control over the keyboard and cursor.
 
+How to install:
+
+Just copy NoMouse.app folder into Applications.
+Grant permissions if prompted.
+Optional, but recommended: Run `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO` to disable caps lock indicator and then restart your computer.
+
+---
+
 How to use NoMouse:
 
 CapsLock - Toggle Mouse mode on and off
@@ -15,7 +23,7 @@ L key - Move left
 A key - Slow speed
 S key - Normal speed
 D key - Fast speed
-F key - Left click | NOTE: To open files for example, you must hold a few miliseconds longer for the click to count as a click to open. Otherwise, if you click to fast, it will seem like the click is not working. (MacOS interprets different click durations as different actions )
+F key - Left click | NOTE: Currently some actions like drag & drop don't work.
 G key - Right click
 
 NoMouse now may seem complicated and too hard to even bother, but trust me, if you're currently on a seperate keyboard and mouse setup, taking the time ( usually a few hours ) to get used to NoMouse is definitely worth it.
