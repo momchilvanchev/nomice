@@ -1,30 +1,34 @@
-This project delivers a new way of using your computor. A mouse-less way! Once you get the hang of it, you will see, that keeping your hands on your keyboard saves a lot of time ( unless you use a trackpad, in which case, it's probably more efficient to use the trackpad ).
+# NoMouse: Revolutionizing How You Use Your Computer
 
-NoMouse is for MacOS ONLY! It is made in Swift with MacOS exclusive libraries for low-level control over the keyboard and cursor.
+NoMouse offers a unique, mouse-less way to navigate your Mac! Once you get the hang of it, you'll realize that keeping your hands on the keyboard can save you a lot of time (unless you're using a trackpad, in which case, it's probably more efficient to stick with it).
 
-How to install:
-
-Just copy NoMouse.app folder into Applications.
-Grant permissions if prompted.
-Optional, but recommended: Run `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO` to disable caps lock indicator and then restart your computer.
-**Important**: To stop NoMouse, open Activity Monitor and quit the process 'nomouse'.
+**Important**: NoMouse is **macOS-only** and is built using Swift with macOS-exclusive libraries for low-level control over the keyboard and cursor.
 
 ---
 
-How to use NoMouse:
+## Installation Guide
 
-CapsLock - Toggle Mouse mode on and off
-\ key - Move right
-' key - Move up
-; key - Move down
-L key - Move left
-( Combination between L ; ' \ will result in diagonals or canceling out )
-, key - Scroll down
-. key - Scroll up
-A key - Slow speed
-S key - Normal speed
-D key - Fast speed
-F key - Left click | NOTE: Currently some actions like drag & drop don't work.
-G key - Right click
+1. Copy the NoMouse.app folder into your Applications directory.
+2. Grant necessary permissions when prompted.
+3. Optional but recommended: Run the following command to disable the Caps Lock indicator:
+   `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO`
+   **Then, restart your computer for changes to take place**.
+4. Important: To stop NoMouse, open Activity Monitor, find the process 'nomouse' and quit it.
 
-NoMouse now may seem complicated and too hard to even bother, but trust me, if you're currently on a seperate keyboard and mouse setup, taking the time ( usually a few hours ) to get used to NoMouse is definitely worth it.
+---
+
+## How to use NoMouse:
+
+- CapsLock - Toggle Mouse mode on and off
+- \ key - Move right
+- ' key - Move up
+- ; key - Move down
+- L key - Move left
+  ( Combination between L ; ' \ will result in diagonals or canceling out )
+- , key - Scroll down
+- . key - Scroll up
+- A key - Slow speed
+- S key - Normal speed
+- D key - Fast speed
+- F key - Left click | NOTE: Currently some actions like drag & drop don't work.
+- G key - Right click
