@@ -7,6 +7,7 @@ How to install:
 Just copy NoMouse.app folder into Applications.
 Grant permissions if prompted.
 Optional, but recommended: Run `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO` to disable caps lock indicator and then restart your computer.
+**Important**: To stop NoMouse, open Activity Monitor and quit the process 'nomouse'.
 
 ---
 
