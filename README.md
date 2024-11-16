@@ -8,7 +8,7 @@ NoMouse offers a unique, mouse-less way to navigate your Mac! Once you get the h
 
 ## Installation Guide
 
-1. Copy the NoMouse.app folder into your Applications directory with the following command: `git clone https://github.com/momchilvanchev/nomice.git && cp -R nomice/NoMouse.app ~/Applications/ && rm -rf nomice`
+1. Copy the NoMouse.app folder into your Applications directory with the following command: `git clone https://github.com/momchilvanchev/nomice.git && sudo cp -R nomice/NoMouse.app /Applications/ && rm -rf nomice`
 2. Grant necessary permissions when prompted.
 3. Optional but recommended: Run the following command to disable the Caps Lock indicator:
    `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO`
