@@ -18,13 +18,13 @@ Note: It is recommended to use NoMouse on MacOS Venture (v13) and above! NoMouse
 
 1. Copy the NoMouse.app folder into your Applications directory with the following command: `git clone https://github.com/momchilvanchev/nomice.git && sudo cp -R nomice/NoMouse.app /Applications/ && rm -rf nomice`
 
-#### _Then_:
+#### **_Then_**:
 
 2. Grant necessary permissions when prompted.
 3. Optional but recommended: Run the following command to disable the Caps Lock indicator:
    `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO`
    **Then, restart your computer for changes to take place**.
-4. Important: To stop NoMouse, open Activity Monitor, find the process 'nomouse' and quit it.
+4. You may get a _“NoMouse” cannot be opened because it is from an unidentified developer._ error. Just go to Settings, then Privacy & Security, scroll down till you find something like _“NoMouse” was blocked from use because it is not from an identidied developer._. Now, click _Open Anyway_ and you should be good to go :)
 
 ---
 

@@ -5,12 +5,12 @@
     <key>CFBundleExecutable</key>
     <string>nomouse</string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourname.nomouse</string>
+    <string>com.nomouse.nomouse</string>
     <key>CFBundleName</key>
     <string>nomouse</string>
     <key>LSUIElement</key>
     <true/>
     <key>CFBundleIconFile</key>
-    <string>icon.icns</string> <!-- optional, add your app icon here -->
+    <string>icon.icns</string>
   </dict>
 </plist>
