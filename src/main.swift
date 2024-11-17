@@ -12,7 +12,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Set the menu bar icon
         if let button = statusItem?.button {
             button.image = NSImage(
-                systemSymbolName: "cursorarrow.rays", accessibilityDescription: "NoMouse")
+                systemSymbolName: "cursorarrow.motionlines", accessibilityDescription: "NoMouse")
         }
 
         // Add a menu to the item
