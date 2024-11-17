@@ -4,6 +4,8 @@ NoMouse offers a unique, mouse-less way to navigate your Mac! Once you get the h
 
 **Important**: NoMouse is **macOS-only** and is built using Swift with macOS-exclusive libraries for low-level control over the keyboard and cursor.
 
+Note: It is recommended to use NoMouse on MacOS Venture (v13) and above! NoMouse is not guaranteed to work on earlier versions of MacOS.
+
 ---
 
 ## Installation Guide
