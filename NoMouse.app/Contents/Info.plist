@@ -11,6 +11,6 @@
     <key>LSUIElement</key>
     <true/>
     <key>CFBundleIconFile</key>
-    <string>icon.icns</string>
+    <string>icon</string> <!-- Reference the icon without extension -->
   </dict>
 </plist>

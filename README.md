@@ -24,7 +24,7 @@ Note: It is recommended to use NoMouse on MacOS Venture (v13) and above! NoMouse
 3. Optional but recommended: Run the following command to disable the Caps Lock indicator:
    `sudo defaults write /Library/Preferences/FeatureFlags/Domain/UIKit redesigned_text_cursor -dict-add Enabled -bool NO`
    **Then, restart your computer for changes to take place**.
-4. You may get a _“NoMouse” cannot be opened because it is from an unidentified developer._ error. Just go to Settings, then Privacy & Security, scroll down till you find something like _“NoMouse” was blocked from use because it is not from an identidied developer._. Now, click _Open Anyway_ and you should be good to go :)
+4. You may get a _“NoMouse” cannot be opened because it is from an unidentified developer._ error. Just go to Settings, then Privacy & Security, scroll down till you find something like _“NoMouse” was blocked from use because it is not from an identidied developer._ Click _Open Anyway_ and you should be good to go :)
 
 ---
 
