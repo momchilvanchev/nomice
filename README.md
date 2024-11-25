@@ -38,6 +38,8 @@ Note: It is recommended to use NoMouse on MacOS Venture (v13) and above! NoMouse
   ( Combination between L ; ' \ will result in diagonals or canceling out )
 - , key - Scroll down
 - . key - Scroll up
+- O key - Scroll left
+- P key - Scroll right
 - A key - Slow speed
 - S key - Normal speed
 - D key - Fast speed
