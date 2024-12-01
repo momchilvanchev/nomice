@@ -11,8 +11,6 @@
     <key>LSUIElement</key>
     <true/>
     <key>CFBundleIconFile</key>
-	<string>AppIcon</string>
-	<key>CFBundleIconName</key>
-	<string>AppIcon</string>
+    <string>AppIcon</string>
   </dict>
 </plist>
